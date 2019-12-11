@@ -1,0 +1,80 @@
+{
+	"users": [
+		{
+			"firstname": "Bob",
+			"lastname": "Smith",
+			"diagramsID": 0
+			
+		},{
+			"firstname": "Kevin",
+			"lastname": "Spacey",
+			"diagramsID": 1
+		}
+	],
+	"diagrams":[
+		{
+			"id":0,
+			"controls":[
+				{
+					"type":"text_field",
+					"text":"This is purely for testing purposes",
+					"is_selected":false,
+					"color":"white",
+					"border-width":5,
+					"border-radius":0,
+					"width":20,
+					"height":20,
+					"font-size":14,
+					"x":200,
+					"y":60,
+					
+				},
+				{
+					"type":"button",
+					"text":"Click Me!",
+					"is_selected":false,
+					"color":"yellow",
+					"border-width":2,
+					"border-radius":0,
+					"width":5,
+					"height":3,
+					"font-size":12,
+					"x":250,
+					"y":70,
+				}
+			]
+		}
+		
+		{
+			"id":1,
+			"controls":[
+				{
+					"type":"label",
+					"text":"I am a label",
+					"is_selected":false,
+					"color":"black",
+					"border-width":0,
+					"border-radius":0,
+					"width":30,
+					"height":10,
+					"font-size":12,
+					"x":300,
+					"y":100,
+				},
+				{
+					"type":"container",
+					"text":"This is purely for testing purposes",
+					"is_selected":false,
+					"color":"blue",
+					"border-width":5,
+					"border-radius":5,
+					"width":50,
+					"height":60,
+					"font-size":0,
+					"x":500,
+					"y":40,
+				}
+			]
+		}
+	]
+}
