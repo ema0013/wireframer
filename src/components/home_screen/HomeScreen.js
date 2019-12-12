@@ -11,7 +11,6 @@ class HomeScreen extends Component {
         if (!this.props.auth.uid) {
             return <Redirect to="/login" />;
         }
-
         return (
             <div className="dashboard container">
                 <div className="row">
@@ -46,6 +45,6 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-      { collection: 'todoLists' },
+      { collection: 'diagrams' },
     ]),
 )(HomeScreen);

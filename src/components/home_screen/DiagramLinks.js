@@ -17,11 +17,12 @@ class DiagramLinks extends React.Component {
         console.log(diagrams);
         return (
             <div className="diagrams section">
-                {diagrams && diagrams.map(diagram => (
+                {diagrams && diagrams.filter(diagram => diagram.userid === this.props.auth.uid)
+                                    .map(diagram =>
                     <Link to={'/diagram/' + diagram.id} key={diagram.id}>
                         <DiagramCard diagram={diagram} />
                     </Link>
-                ))}
+                )}
             </div>
         );
     }
@@ -42,6 +43,7 @@ class DiagramLinks extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.firestore.ordered);
     return {
         diagrams: state.firestore.ordered.diagrams,
         auth: state.firebase.auth,

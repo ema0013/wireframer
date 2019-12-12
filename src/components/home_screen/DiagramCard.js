@@ -11,9 +11,9 @@ class DiagramCard extends React.Component {
 
     render() {
         const { diagram } = this.props;
-        console.log("TodoListCard, todoList.id: " + diagram.id);
+        console.log("diagramcard, diagram.id: " + diagram.id);
         return (
-            <div className="card z-depth-0 todo-list-link" onClick={this.updateTimeStamp}>
+            <div className="card z-depth-0 diagram-link" onClick={this.updateTimeStamp}>
                 <div className="card-content grey-text text-darken-3 hoverable">
                     <span className="card-title">{diagram.name}</span>
                 </div>
