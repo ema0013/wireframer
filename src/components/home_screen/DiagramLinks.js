@@ -6,20 +6,20 @@ import DiagramCard from './DiagramCard';
 
 class DiagramLinks extends React.Component {
     render() {
-        if(!this.props.todoLists){
+        if(!this.props.diagrams){
             return(
-                <div className="todo-lists section">
+                <div className="diagrams section">
                 </div>
             );
         }
-        this.props.todoLists.sort(this.compare);
-        const todoLists = this.props.todoLists;
-        console.log(todoLists);
+        this.props.diagrams.sort(this.compare);
+        const diagrams = this.props.diagrams;
+        console.log(diagrams);
         return (
-            <div className="todo-lists section">
-                {todoLists && todoLists.map(todoList => (
-                    <Link to={'/diagram/' + todoList.id} key={todoList.id}>
-                        <DiagramCard todoList={todoList} />
+            <div className="diagrams section">
+                {diagrams && diagrams.map(diagram => (
+                    <Link to={'/diagram/' + diagram.id} key={diagram.id}>
+                        <DiagramCard diagram={diagram} />
                     </Link>
                 ))}
             </div>
@@ -48,4 +48,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default compose(connect(mapStateToProps))(Diagramlinks);
+export default compose(connect(mapStateToProps))(DiagramLinks);
