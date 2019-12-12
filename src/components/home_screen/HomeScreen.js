@@ -4,8 +4,25 @@ import { compose } from 'redux';
 import { NavLink, Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import DiagramLinks from './DiagramLinks';
+import {getFirestore} from 'redux-firestore';
+import { firestore } from 'firebase';
 
 class HomeScreen extends Component {
+
+    handleNewDiagram = () =>{
+        const fireStore = getFirestore();
+        var currentDate = new Date();
+        var timestamp = currentDate.getTime();
+
+        fireStore.collection('diagrams').add({
+            name:"",
+            last_updated:timestamp,
+            userid:this.props.auth.uid,
+            height:600,
+            width:800,
+            controls:[]
+        });
+    }
 
     render() {
         if (!this.props.auth.uid) {
@@ -45,6 +62,6 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-      { collection: 'diagrams' },
+      { collection:'diagrams'},
     ]),
 )(HomeScreen);

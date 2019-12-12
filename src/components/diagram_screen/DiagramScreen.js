@@ -5,30 +5,31 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
 import M from 'materialize-css';
+
 class DiagramScreen extends Component {
     state = {
         name: this.props.diagram.name,
         last_updated:'',
     }
-    handleChange = (e) => {
+    handleNameChange = (e) => {
         const { target } = e;
-        this.setState(state => ({
-            ...state,
-            [target.id]: target.value,
+        this.setState(()=>({
+            name:target.value
         }));
         this.setState(() => ({
             last_updated: new Date().getTime()
         }));
         let firestore = getFirestore();
-        let currentDiagram = firestore.collection("diagrams").doc(this.props.diagram.id);
-        currentDiagram.update({[target.id]:target.value});
+        const diagramRef = firestore.collection('diagrams');
+        let currentDiagram = diagramRef.doc(this.props.id);
+        currentDiagram.update({name:target.value});
         currentDiagram.update({last_updated:this.state.last_updated});
     }
     render() {
         const auth = this.props.auth;
         const diagram = this.props.diagram;
         if (!auth.uid) {
-            return <Redirect to="/" />;
+            return (<Redirect to="/" />);
         }
         return (
             <div className="container white">
@@ -38,7 +39,7 @@ class DiagramScreen extends Component {
                 
                 <div className="input-field">
                     <label className="active" htmlFor="email">Name</label>
-                    <input type="text" name="name" id="name" onChange={this.handleChange} value={diagram.name} />
+                    <input type="text" name="name" id="name" onChange={this.handleNameChange} value={diagram.name} />
                 </div>
                 
             </div>
@@ -47,11 +48,13 @@ class DiagramScreen extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
     const { id } = ownProps.match.params;
-    const { diagram } = state.firestore.data;
-    console.log(state);
+    const { diagrams } = state.firestore.data;
+    let diagram = diagrams ? diagrams[id] : null;
+    console.log(diagrams);
   
     return {
       diagram,
+      id,
       auth: state.firebase.auth,
     };
   };
