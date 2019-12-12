@@ -1,21 +1,13 @@
 {
-	"users": [
+	"wireframes":[
 		{
-			"firstname": "Bob",
-			"lastname": "Smith",
-			"diagramsID": 0
-			
-		},{
-			"firstname": "Kevin",
-			"lastname": "Spacey",
-			"diagramsID": 1
-		}
-	],
-	"diagrams":[
-		{
-			"id":0,
+			"userid":"fill it in later",
+			"name":"Make America Great Again",
+			"width":600,
+			"height":800,
 			"controls":[
 				{
+					"id":0,
 					"type":"text_field",
 					"text":"This is purely for testing purposes",
 					"is_selected":false,
@@ -26,10 +18,10 @@
 					"height":20,
 					"font-size":14,
 					"x":200,
-					"y":60,
-					
+					"y":60
 				},
 				{
+					"id":1,
 					"type":"button",
 					"text":"Click Me!",
 					"is_selected":false,
@@ -40,13 +32,16 @@
 					"height":3,
 					"font-size":12,
 					"x":250,
-					"y":70,
+					"y":70
 				}
 			]
-		}
-		
+
+		},
 		{
-			"id":1,
+			"userid":"fill it in later",
+			"name":"A better Stony Brook bus app",
+			"width":600,
+			"height":800,
 			"controls":[
 				{
 					"type":"label",
@@ -59,7 +54,7 @@
 					"height":10,
 					"font-size":12,
 					"x":300,
-					"y":100,
+					"y":100
 				},
 				{
 					"type":"container",
@@ -72,7 +67,7 @@
 					"height":60,
 					"font-size":0,
 					"x":500,
-					"y":40,
+					"y":40
 				}
 			]
 		}
