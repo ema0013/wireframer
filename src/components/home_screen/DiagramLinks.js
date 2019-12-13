@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import DiagramCard from './DiagramCard';
 import M from 'materialize-css';
+import {getFirestore} from 'redux-firestore';
 
 class DiagramLinks extends React.Component {
 
