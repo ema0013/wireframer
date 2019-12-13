@@ -5,9 +5,14 @@ import { Link, Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import DiagramLinks from './DiagramLinks';
 import {getFirestore} from 'redux-firestore';
+import M from 'materialize-css';
 import { firestore } from 'firebase';
 
 class HomeScreen extends Component {
+
+    state = {
+        currentDiagram:''
+    }
 
     handleNewDiagram = () =>{
         const fireStore = getFirestore();
@@ -25,7 +30,25 @@ class HomeScreen extends Component {
     }
 
     deleteDiagram = () =>{
-
+        //the current selected diagram should be on top of the list
+        let diagrams = this.props.diagrams.filter(diagram => diagram.userid === this.props.auth.uid);
+        diagrams.sort(this.compare);
+        const firestore = getFirestore();
+        firestore.collection('diagrams').doc(diagrams[0].id).delete(); 
+    }
+    
+    compare = (list1,list2) =>{
+        let stamp1 = list1.last_updated;
+        let stamp2 = list2.last_updated;
+        if(stamp1 > stamp2){
+            return -1;
+        }
+        else if (stamp1 === stamp2){
+            return 0;
+        }
+        else{
+            return 1;
+        }
     }
 
     render() {
@@ -45,7 +68,7 @@ class HomeScreen extends Component {
                             Project Diagram Maker
                         </div>
                         
-                        <div className="home_new_list_container">
+                        <div className="home_new_diagram_container">
                                 <button className="home_new_diagram_button" onClick={this.handleNewDiagram}>
                                     Create a New Diagram
                                 </button>
@@ -69,6 +92,7 @@ class HomeScreen extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        diagrams: state.firestore.ordered.diagrams,
         auth: state.firebase.auth
     };
 };

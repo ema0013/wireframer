@@ -8,10 +8,14 @@ import {getFirestore} from 'redux-firestore';
 
 class DiagramLinks extends React.Component {
 
-    initModal = () =>{
+    initModal = (diagramid) =>{
+        let firestore = getFirestore();
+        let currentList = firestore.collection("diagrams").doc(diagramid);
+        currentList.update({last_updated:new Date().getTime()});
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
         instances[0].open();
+        
     }
     
     render() {
@@ -29,7 +33,7 @@ class DiagramLinks extends React.Component {
                 {diagrams && diagrams.filter(diagram => diagram.userid === this.props.auth.uid)
                                     .map(diagram =>
                     <div>
-                        <div className="btn" onClick={this.initModal}>
+                        <div className="btn" onClick={event => this.initModal(diagram.id)}>
                             <i className="material-icons">delete</i>
                         </div>
                         <Link to={'/diagram/' + diagram.id} key={diagram.id}>

@@ -42,6 +42,7 @@ class DiagramScreen extends Component {
                     <input type="text" name="name" id="name" onChange={this.handleNameChange} value={diagram.name} />
                 </div>
                 
+                
             </div>
         );
     }
