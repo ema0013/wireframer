@@ -5,6 +5,7 @@ import { compose } from 'redux';
 
 class ItemBox extends React.Component{
     render(){
+        console.log(this.props);
         return(
             <div className="item_box">
                 
@@ -13,9 +14,7 @@ class ItemBox extends React.Component{
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state.firestore.ordered);
     return {
-        diagrams: state.firestore.ordered.diagrams,
         auth: state.firebase.auth,
     };
 };

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
-import M from 'materialize-css';
+import ItemBox from './ItemBox.js';
 
 class DiagramScreen extends Component {
     state = {
@@ -41,7 +41,7 @@ class DiagramScreen extends Component {
                     <label className="active" htmlFor="email">Name</label>
                     <input type="text" name="name" id="name" onChange={this.handleNameChange} value={diagram.name} />
                 </div>
-                
+                <ItemBox diagram={this.props.diagram}/>
                 
             </div>
         );
@@ -51,7 +51,6 @@ const mapStateToProps = (state, ownProps) => {
     const { id } = ownProps.match.params;
     const { diagrams } = state.firestore.data;
     let diagram = diagrams ? diagrams[id] : null;
-    console.log(diagrams);
   
     return {
       diagram,
