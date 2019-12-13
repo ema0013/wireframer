@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { NavLink, Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import DiagramLinks from './DiagramLinks';
 import {getFirestore} from 'redux-firestore';
@@ -22,6 +22,10 @@ class HomeScreen extends Component {
             width:800,
             controls:[]
         });
+    }
+
+    deleteDiagram = () =>{
+
     }
 
     render() {
@@ -46,6 +50,16 @@ class HomeScreen extends Component {
                                     Create a New Diagram
                                 </button>
                         </div>
+                    </div>
+                </div>
+                <div id="modal1" className="modal">
+                    <div className="modal-content">
+                    <h4>Delete Current Diagram</h4>
+                    <p>Are you sure you want to delete the current diagram?</p>
+                    </div>
+                    <div className="modal-footer">
+                    <Link className="modal-close waves-effect waves-red btn-flat" to="/" onClick={this.deleteDiagram}>Yes</Link>
+                    <a href="#!" className="modal-close waves-effect waves-green btn-flat">No</a>
                     </div>
                 </div>
             </div>

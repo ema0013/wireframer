@@ -3,8 +3,16 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import DiagramCard from './DiagramCard';
+import M from 'materialize-css';
 
 class DiagramLinks extends React.Component {
+
+    initModal = () =>{
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+        instances[0].open();
+    }
+    
     render() {
         if(!this.props.diagrams){
             return(
@@ -19,9 +27,15 @@ class DiagramLinks extends React.Component {
             <div className="diagrams section">
                 {diagrams && diagrams.filter(diagram => diagram.userid === this.props.auth.uid)
                                     .map(diagram =>
-                    <Link to={'/diagram/' + diagram.id} key={diagram.id}>
-                        <DiagramCard diagram={diagram} />
-                    </Link>
+                    <div>
+                        <div className="btn" onClick={this.initModal}>
+                            <i className="material-icons">delete</i>
+                        </div>
+                        <Link to={'/diagram/' + diagram.id} key={diagram.id}>
+                            <DiagramCard diagram={diagram} />
+                        </Link>
+                    </div>
+                    
                 )}
             </div>
         );
