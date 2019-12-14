@@ -10,6 +10,8 @@ class DiagramScreen extends Component {
     state = {
         name: this.props.diagram.name,
         last_updated:'',
+        selectedControl:null,
+        controls:this.props.diagram.controls,
     }
     handleNameChange = (e) => {
         const { target } = e;
@@ -24,6 +26,19 @@ class DiagramScreen extends Component {
         let currentDiagram = diagramRef.doc(this.props.id);
         currentDiagram.update({name:target.value});
         currentDiagram.update({last_updated:this.state.last_updated});
+    }
+
+    updateCoord = (e,d, controlIndex) =>{
+        const x = d.x;
+        const y = d.y;
+        const firestore = getFirestore();
+        const diagramRef = firestore.collection('diagrams');
+        let diagram = diagramRef.doc(this.props.id);
+        let new_controls = this.state.controls;
+        new_controls[controlIndex].x = x;
+        new_controls[controlIndex].y = y;
+        this.setState({controls:new_controls});
+        diagram.update({controls:new_controls});
     }
     render() {
         const auth = this.props.auth;
@@ -41,7 +56,7 @@ class DiagramScreen extends Component {
                     <label className="active" htmlFor="email">Name</label>
                     <input type="text" name="name" id="name" onChange={this.handleNameChange} value={diagram.name} />
                 </div>
-                <ItemBox diagram={this.props.diagram}/>
+                <ItemBox diagram={this.props.diagram} updateCoord={this.updateCoord}/>
                 
             </div>
         );
