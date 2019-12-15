@@ -20,6 +20,9 @@ class DiagramScreen extends Component {
     }
 
     saveChanges = ()=>{
+        this.setState(() => ({
+            last_updated: new Date().getTime()
+        }));
         let firestore = getFirestore();
         const diagramRef = firestore.collection('diagrams');
         let currentDiagram = diagramRef.doc(this.props.id);
@@ -32,12 +35,8 @@ class DiagramScreen extends Component {
 
     handleNameChange = (e) => {
         const { target } = e;
-        console.log(target);
         this.setState(()=>({
             name:target.value
-        }));
-        this.setState(() => ({
-            last_updated: new Date().getTime()
         }));
     }
 
@@ -47,9 +46,6 @@ class DiagramScreen extends Component {
         this.setState(()=>({
             width:val
         }));
-        this.setState(() => ({
-            last_updated: new Date().getTime()
-        }));
     }
 
     handleHeightChange = (e) =>{
@@ -58,9 +54,7 @@ class DiagramScreen extends Component {
         this.setState(()=>({
             height:val
         }));
-        this.setState(() => ({
-            last_updated: new Date().getTime()
-        }));
+        
     }
 
     toggleSelected = (control) =>{
@@ -77,6 +71,87 @@ class DiagramScreen extends Component {
         new_controls[controlIndex].y = y;
         this.setState({controls:new_controls});
     }
+
+    addNewButton = () =>{
+        const new_controls = this.state.controls;
+        let buttonControl = {
+            id:this.state.controls.length,
+            type:"button",
+            text:"new button",
+            is_selected:false,
+            color:"white",
+            border_width:2,
+            border_radius:0,
+            width:80,
+            height:40,
+            font_size:12,
+            x:0,
+            y:0
+        };
+        new_controls.push(buttonControl);
+        this.setState({controls:new_controls});
+    }
+
+    addNewLabel = () =>{
+        const new_controls = this.state.controls;
+        let labelControl = {
+            id:this.state.controls.length,
+            type:"label",
+            text:"new label",
+            is_selected:false,
+            color:"white",
+            border_width:2,
+            border_radius:0,
+            width:90,
+            height:30,
+            font_size:12,
+            x:0,
+            y:0
+        };
+        new_controls.push(labelControl);
+        this.setState({controls:new_controls});
+    }
+
+    addNewTextfield = () =>{
+        const new_controls = this.state.controls;
+        let textControl = {
+            id:this.state.controls.length,
+            type:"text_field",
+            text:"new textfield",
+            is_selected:false,
+            color:"white",
+            border_width:2,
+            border_radius:0,
+            width:200,
+            height:100,
+            font_size:12,
+            x:0,
+            y:0
+        };
+        new_controls.push(textControl);
+        this.setState({controls:new_controls});
+    }
+
+    addNewContainer = () =>{
+        const new_controls = this.state.controls;
+        let containerControl = {
+            id:this.state.controls.length,
+            type:"container",
+            text:"new container",
+            is_selected:false,
+            color:"white",
+            border_width:2,
+            border_radius:0,
+            width:500,
+            height:40,
+            font_size:12,
+            x:0,
+            y:0
+        };
+        new_controls.push(containerControl);
+        this.setState({controls:new_controls});
+    }
+
     render() {
         const auth = this.props.auth;
         console.log(this.state.controls);
@@ -97,6 +172,10 @@ class DiagramScreen extends Component {
                         <label className="active col s6" htmlFor="diagram-height">Diagram Height</label>
                         <input className="col s6" type="text" onChange={this.handleWidthChange} value={this.state.width}/>
                         <input className="col s6" type="text" onChange={this.handleHeightChange} value={this.state.height}/>
+                        <div className="btn col s3" onClick={this.addNewButton}>Add new button</div>
+                        <div className="btn col s3" onClick={this.addNewLabel}>Add new Label</div>
+                        <div className="btn col s3" onClick={this.addNewTextfield}>Add new Textfield</div>
+                        <div className="btn col s3" onClick={this.addNewContainer}>Add new Container</div>
                     </div>
                 </div>
                 <ItemBox controls={this.state.controls} width={this.state.width} height={this.state.height} updateCoord={this.updateCoord} toggleSelected={this.toggleSelected}/>
