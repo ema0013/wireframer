@@ -7,6 +7,7 @@ import {Rnd} from "react-rnd";
 class Control extends React.Component{
     render(){
       const control = this.props.control;
+      console.log(control);
         if(control.type === "label"){
           return(
             <Rnd

@@ -5,6 +5,7 @@
 			"name":"Make America Great Again",
 			"width":600,
 			"height":800,
+			"last_updated":0,
 			"controls":[
 				{
 					"id":0,
@@ -41,6 +42,7 @@
 			"userid":"JWCpeJnUOLe2Eg9jyN53w7qIUEv2",
 			"name":"A better Stony Brook bus app",
 			"width":600,
+			"last_updated":0,
 			"height":800,
 			"controls":[
 				{

@@ -15,7 +15,6 @@ class DiagramLinks extends React.Component {
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
         instances[0].open();
-        
     }
     
     render() {

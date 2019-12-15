@@ -5,14 +5,32 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
 import ItemBox from './ItemBox.js';
+import NumericInput from 'react-numeric-input';
+//TODO
+//get the dimension changes working
+//implement control maker
 
 class DiagramScreen extends Component {
     state = {
         name: this.props.diagram.name,
-        last_updated:'',
+        last_updated:0,
         selectedControl:null,
+        width:this.props.diagram.width,
+        height:this.props.diagram.height,
         controls:this.props.diagram.controls,
     }
+
+    saveChanges = ()=>{
+        let firestore = getFirestore();
+        const diagramRef = firestore.collection('diagrams');
+        let currentDiagram = diagramRef.doc(this.props.id);
+        currentDiagram.update({name:this.state.name});
+        currentDiagram.update({last_updated:this.state.last_updated});
+        currentDiagram.update({width:this.state.width});
+        currentDiagram.update({height:this.state.height});
+        currentDiagram.update({controls:this.state.controls});
+    }
+
     handleNameChange = (e) => {
         const { target } = e;
         console.log(target);
@@ -22,40 +40,54 @@ class DiagramScreen extends Component {
         this.setState(() => ({
             last_updated: new Date().getTime()
         }));
-        let firestore = getFirestore();
-        const diagramRef = firestore.collection('diagrams');
-        let currentDiagram = diagramRef.doc(this.props.id);
-        currentDiagram.update({name:target.value});
-        currentDiagram.update({last_updated:this.state.last_updated});
     }
 
-    handleDimensionChange = (e) =>{
-        const target = e;
-        console.log(target);
-        
-        
+    handleWidthChange = (e) =>{
+        this.setState(()=>({
+            width:e.currentTarget.value
+        }));
+        this.setState(() => ({
+            last_updated: new Date().getTime()
+        }));
+        // let firestore = getFirestore();
+        // const diagramRef = firestore.collection('diagrams');
+        // let currentDiagram = diagramRef.doc(this.props.id);
+        // currentDiagram.update({width:e.currentTarget.value});
+        // currentDiagram.update({last_updated:this.state.last_updated});
+
     }
+
+    handleHeightChange = (e) =>{
+        this.setState(()=>({
+            height:e.currentTarget.value
+        }));
+        this.setState(() => ({
+            last_updated: new Date().getTime()
+        }));
+        // let firestore = getFirestore();
+        // const diagramRef = firestore.collection('diagrams');
+        // let currentDiagram = diagramRef.doc(this.props.id);
+        // currentDiagram.update({height:e.currentTarget.value});
+        // currentDiagram.update({last_updated:this.state.last_updated});
+    }
+
     toggleSelected = (control) =>{
         this.setState({selectedControl:control === this.state.selectedControl ? null : control});
         let newControls = this.state.controls;
         newControls.forEach(controli => controli.is_selected = (controli === control ? true : false));
-        let firestore = getFirestore();
-        const diagramRef = firestore.collection('diagrams');
-        let currentDiagram = diagramRef.doc(this.props.id);
-        currentDiagram.update({controls:newControls});
+        // let firestore = getFirestore();
+        // const diagramRef = firestore.collection('diagrams');
+        // let currentDiagram = diagramRef.doc(this.props.id);
+        // currentDiagram.update({controls:newControls});
     }
 
     updateCoord = (e,d, controlIndex) =>{
         const x = d.x;
         const y = d.y;
-        const firestore = getFirestore();
-        const diagramRef = firestore.collection('diagrams');
-        let diagram = diagramRef.doc(this.props.id);
         let new_controls = this.state.controls;
         new_controls[controlIndex].x = x;
         new_controls[controlIndex].y = y;
-        this.setState({controls:new_controls});
-        diagram.update({controls:new_controls});
+        this.setState({controls:new_controls},()=>console.log(this.state.controls));
     }
     render() {
         const auth = this.props.auth;
@@ -68,18 +100,18 @@ class DiagramScreen extends Component {
                 <h5 className="grey-text text-darken-3">
                     Diagram                           
                 </h5>
-                
+                <div className="btn " onClick={this.saveChanges}>Save your Work</div>
                 <div className="input-field">
                     <label className="active" htmlFor="email">Name</label>
-                    <input type="text" name="name" id="name" onChange={this.handleNameChange} value={diagram.name} />
+                    <input type="text" name="name" id="name" onChange={this.handleNameChange} value={this.state.name} />
                     <div className="row">
                         <label className="active col s6" htmlFor="diagram-width">Diagram Width</label>
                         <label className="active col s6" htmlFor="diagram-height">Diagram Height</label>
-                        <input className="col s6" type="number" name="width" id="width" onChange={this.handleDimensionChange} value={diagram.width} />
-                        <input className="col s6" type="number" name="height" id="height" onChange={this.handleDimensionChange} value={diagram.height} />
+                        <input className="col s6" type="number" onChange={e=>this.handleWidthChange(e)} value={this.state.width}/>
+                        <input className="col s6" type="number" onChange={e=>this.handleHeightChange(e)} value={this.state.height}/>
                     </div>
                 </div>
-                <ItemBox diagram={this.props.diagram} updateCoord={this.updateCoord} toggleSelected={this.toggleSelected}/>
+                <ItemBox controls={this.state.controls} width={this.state.width} height={this.state.height} updateCoord={this.updateCoord} toggleSelected={this.toggleSelected}/>
                 
             </div>
         );
