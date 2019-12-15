@@ -8,12 +8,11 @@ class ItemBox extends React.Component{
     // create the consts for 4 control types
     // implement the boxes used to toggle which control you're clicking on
     render(){
-        const controls = this.props.controls;
         const style={
             width:this.props.width,
             height:this.props.height
         }
-            if(!controls){
+            if(!this.props.controls){
                 return(
                     <div className="item_box">
                     </div>
@@ -21,7 +20,7 @@ class ItemBox extends React.Component{
             }
             return(
                 <div className='item_box container grey z-depth-2' style={style}>
-                    {controls.map(control =>
+                    {this.props.controls.map(control =>
                         <Control control={control} updateCoord={this.props.updateCoord} toggleSelected={this.props.toggleSelected}/>
                     )}
                 </div>

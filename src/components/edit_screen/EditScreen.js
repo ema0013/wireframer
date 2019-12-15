@@ -5,7 +5,6 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
 import ItemBox from './ItemBox.js';
-import NumericInput from 'react-numeric-input';
 //TODO
 //get the dimension changes working
 //implement control maker
@@ -43,42 +42,31 @@ class DiagramScreen extends Component {
     }
 
     handleWidthChange = (e) =>{
+        const {target} = e;
+        let val = parseInt(target.value);
         this.setState(()=>({
-            width:e.currentTarget.value
+            width:val
         }));
         this.setState(() => ({
             last_updated: new Date().getTime()
         }));
-        // let firestore = getFirestore();
-        // const diagramRef = firestore.collection('diagrams');
-        // let currentDiagram = diagramRef.doc(this.props.id);
-        // currentDiagram.update({width:e.currentTarget.value});
-        // currentDiagram.update({last_updated:this.state.last_updated});
-
     }
 
     handleHeightChange = (e) =>{
+        const {target} = e;
+        let val = parseInt(target.value);
         this.setState(()=>({
-            height:e.currentTarget.value
+            height:val
         }));
         this.setState(() => ({
             last_updated: new Date().getTime()
         }));
-        // let firestore = getFirestore();
-        // const diagramRef = firestore.collection('diagrams');
-        // let currentDiagram = diagramRef.doc(this.props.id);
-        // currentDiagram.update({height:e.currentTarget.value});
-        // currentDiagram.update({last_updated:this.state.last_updated});
     }
 
     toggleSelected = (control) =>{
         this.setState({selectedControl:control === this.state.selectedControl ? null : control});
         let newControls = this.state.controls;
         newControls.forEach(controli => controli.is_selected = (controli === control ? true : false));
-        // let firestore = getFirestore();
-        // const diagramRef = firestore.collection('diagrams');
-        // let currentDiagram = diagramRef.doc(this.props.id);
-        // currentDiagram.update({controls:newControls});
     }
 
     updateCoord = (e,d, controlIndex) =>{
@@ -87,11 +75,11 @@ class DiagramScreen extends Component {
         let new_controls = this.state.controls;
         new_controls[controlIndex].x = x;
         new_controls[controlIndex].y = y;
-        this.setState({controls:new_controls},()=>console.log(this.state.controls));
+        this.setState({controls:new_controls});
     }
     render() {
         const auth = this.props.auth;
-        const diagram = this.props.diagram;
+        console.log(this.state.controls);
         if (!auth.uid) {
             return (<Redirect to="/" />);
         }
@@ -107,8 +95,8 @@ class DiagramScreen extends Component {
                     <div className="row">
                         <label className="active col s6" htmlFor="diagram-width">Diagram Width</label>
                         <label className="active col s6" htmlFor="diagram-height">Diagram Height</label>
-                        <input className="col s6" type="number" onChange={e=>this.handleWidthChange(e)} value={this.state.width}/>
-                        <input className="col s6" type="number" onChange={e=>this.handleHeightChange(e)} value={this.state.height}/>
+                        <input className="col s6" type="text" onChange={this.handleWidthChange} value={this.state.width}/>
+                        <input className="col s6" type="text" onChange={this.handleHeightChange} value={this.state.height}/>
                     </div>
                 </div>
                 <ItemBox controls={this.state.controls} width={this.state.width} height={this.state.height} updateCoord={this.updateCoord} toggleSelected={this.toggleSelected}/>
