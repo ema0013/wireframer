@@ -18,6 +18,11 @@ class Control extends React.Component{
       this.setState({jankSolution:false});
     }
 
+    updateResizePlease = (e,direction,ref,delta,position,controlId) =>{
+       this.props.resizeControl(e,direction,ref,delta,position,controlId);
+       this.setState({jankSolution:false});
+    }
+
     render(){
       const control = this.props.control;
       console.log(control.is_selected)
@@ -27,6 +32,7 @@ class Control extends React.Component{
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
+              onResizeStop={(e,direction,ref,delta,position) => this.updateResizePlease(e,direction,ref,delta,position,control.id)}
               onClick={this.updateTogglePlease(control)}
               bounds={"parent"}
               style={{borderStyle:"solid" }}
@@ -34,7 +40,9 @@ class Control extends React.Component{
               <label id={control.is_selected ? "toggled":""}
               style={{backgroundColor:control.color, 
                 width:'100%',
-                height:'100%'}}>
+                height:'100%',
+                fontSize:control.font_size}
+                }>
                 {control.text}
               </label>
             </Rnd>
@@ -46,13 +54,15 @@ class Control extends React.Component{
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
+              onResizeStop={(e,direction,ref,delta,position) => this.updateResizePlease(e,direction,ref,delta,position,control.id)}
               onClick={this.props.toggleSelected(control)}
               bounds={"parent"}
               style={{borderStyle:"solid"}}>
               <div className="materialize-textarea" id={control.is_selected ? "toggled":""}
               style={{backgroundColor:control.color,
                       width:'100%',
-                      height:'100%'}}>
+                      height:'100%',
+                      fontSize:control.font_size}}>
                 {control.text}
               </div>
             </Rnd>
@@ -64,13 +74,15 @@ class Control extends React.Component{
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
+              onResizeStop={(e,direction,ref,delta,position) => this.updateResizePlease(e,direction,ref,delta,position,control.id)}
               onClick={this.props.toggleSelected(control)}
               bounds={"parent"}
               style={{borderStyle:"solid"}}>
               <div className="container" id={control.is_selected ? "toggled":""}
               style={{backgroundColor:control.color,
                 width:'100%',
-                height:'100%'}}>
+                height:'100%',
+                fontSize:control.font_size}}>
               </div>
             </Rnd>
           );
@@ -81,13 +93,15 @@ class Control extends React.Component{
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
+              onResizeStop={(e,direction,ref,delta,position) => this.updateResizePlease}
               onClick={this.props.toggleSelected(control)}
               bounds={"parent"}
               style={{borderStyle:"solid"}}>
               <div className="btn" id={control.is_selected ? "toggled":""}
               style={{backgroundColor:control.color,
                 width:'100%',
-                height:'100%'}}>
+                height:'100%',
+                fontSize:control.font_size}}>
                 {control.text}
               </div>
             </Rnd>
