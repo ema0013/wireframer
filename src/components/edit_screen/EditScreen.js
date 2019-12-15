@@ -15,6 +15,7 @@ class DiagramScreen extends Component {
     }
     handleNameChange = (e) => {
         const { target } = e;
+        console.log(target);
         this.setState(()=>({
             name:target.value
         }));
@@ -26,6 +27,13 @@ class DiagramScreen extends Component {
         let currentDiagram = diagramRef.doc(this.props.id);
         currentDiagram.update({name:target.value});
         currentDiagram.update({last_updated:this.state.last_updated});
+    }
+
+    handleDimensionChange = (e) =>{
+        const target = e;
+        console.log(target);
+        
+        
     }
     toggleSelected = (control) =>{
         this.setState({selectedControl:control === this.state.selectedControl ? null : control});
@@ -64,6 +72,12 @@ class DiagramScreen extends Component {
                 <div className="input-field">
                     <label className="active" htmlFor="email">Name</label>
                     <input type="text" name="name" id="name" onChange={this.handleNameChange} value={diagram.name} />
+                    <div className="row">
+                        <label className="active col s6" htmlFor="diagram-width">Diagram Width</label>
+                        <label className="active col s6" htmlFor="diagram-height">Diagram Height</label>
+                        <input className="col s6" type="number" name="width" id="width" onChange={this.handleDimensionChange} value={diagram.width} />
+                        <input className="col s6" type="number" name="height" id="height" onChange={this.handleDimensionChange} value={diagram.height} />
+                    </div>
                 </div>
                 <ItemBox diagram={this.props.diagram} updateCoord={this.updateCoord} toggleSelected={this.toggleSelected}/>
                 
