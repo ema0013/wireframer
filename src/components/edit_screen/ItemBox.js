@@ -7,6 +7,9 @@ import Control from './Control.js';
 class ItemBox extends React.Component{
     // create the consts for 4 control types
     // implement the boxes used to toggle which control you're clicking on
+    state = {
+        rerender:true
+    }
     render(){
         const style={
             width:this.props.width,

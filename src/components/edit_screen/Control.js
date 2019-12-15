@@ -5,15 +5,22 @@ import { compose } from 'redux';
 import {Rnd} from "react-rnd";
 
 class Control extends React.Component{
+  state = {
+    jankSolution:false
+  }
+    updatePlease = (e,d,controlId) =>{
+      this.props.updateCoord(e,d,controlId);
+      this.setState({jankSolution:false});
+    }
+
     render(){
       const control = this.props.control;
-      console.log(control);
         if(control.type === "label"){
           return(
             <Rnd
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
-              onDragStop={(e, d) => { this.props.updateCoord(e,d,control.id) }}
+              onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
               onClick={this.props.toggleSelected(control)}
               bounds={"parent"}>
               <label
@@ -30,7 +37,7 @@ class Control extends React.Component{
             <Rnd
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
-              onDragStop={(e, d) => { this.props.updateCoord(e,d,control.id) }}
+              onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
               onClick={this.props.toggleSelected(control)}
               bounds={"parent"}>
               <div className="materialize-textarea"
@@ -47,7 +54,7 @@ class Control extends React.Component{
             <Rnd
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
-              onDragStop={(e, d) => { this.props.updateCoord(e,d,control.id) }}
+              onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
               onClick={this.props.toggleSelected(control)}
               bounds={"parent"}>
               <div className="container"
@@ -63,7 +70,7 @@ class Control extends React.Component{
             <Rnd
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
-              onDragStop={(e, d) => { this.props.updateCoord(e,d,control.id) }}
+              onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
               onClick={this.props.toggleSelected(control)}
               bounds={"parent"}>
               <div className="button"

@@ -70,6 +70,7 @@ class DiagramScreen extends Component {
         new_controls[controlIndex].x = x;
         new_controls[controlIndex].y = y;
         this.setState({controls:new_controls});
+        this.setState({last_updated: new Date().getTime()});
     }
 
     addNewButton = () =>{
