@@ -27,6 +27,15 @@ class DiagramScreen extends Component {
         currentDiagram.update({name:target.value});
         currentDiagram.update({last_updated:this.state.last_updated});
     }
+    toggleSelected = (control) =>{
+        this.setState({selectedControl:control === this.state.selectedControl ? null : control});
+        let newControls = this.state.controls;
+        newControls.forEach(controli => controli.is_selected = (controli === control ? true : false));
+        let firestore = getFirestore();
+        const diagramRef = firestore.collection('diagrams');
+        let currentDiagram = diagramRef.doc(this.props.id);
+        currentDiagram.update({controls:newControls});
+    }
 
     updateCoord = (e,d, controlIndex) =>{
         const x = d.x;
@@ -56,7 +65,7 @@ class DiagramScreen extends Component {
                     <label className="active" htmlFor="email">Name</label>
                     <input type="text" name="name" id="name" onChange={this.handleNameChange} value={diagram.name} />
                 </div>
-                <ItemBox diagram={this.props.diagram} updateCoord={this.updateCoord}/>
+                <ItemBox diagram={this.props.diagram} updateCoord={this.updateCoord} toggleSelected={this.toggleSelected}/>
                 
             </div>
         );

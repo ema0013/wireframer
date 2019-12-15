@@ -4,6 +4,12 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 class ControlMaker extends React.Component{
+    render(){
+        return(
+        <div>
+            
+        </div>);
+    }
 
 }
 const mapStateToProps = (state) => {

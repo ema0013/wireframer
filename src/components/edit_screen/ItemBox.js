@@ -23,7 +23,7 @@ class ItemBox extends React.Component{
             return(
                 <div className='item_box container grey z-depth-2' style={style}>
                     {diagram.controls.map(control =>
-                        <Control control={control} updateCoord={this.props.updateCoord}/>
+                        <Control control={control} updateCoord={this.props.updateCoord} toggleSelected={this.props.toggleSelected}/>
                     )}
                 </div>
             );

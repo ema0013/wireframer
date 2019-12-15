@@ -13,8 +13,12 @@ class Control extends React.Component{
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.props.updateCoord(e,d,control.id) }}
+              onClick={this.props.toggleSelected(control)}
               bounds={"parent"}>
-              <label>
+              <label
+              style={{backgroundColor:control.color,
+                width:'100%',
+                height:'100%'}}>
                 {control.text}
               </label>
             </Rnd>
@@ -26,8 +30,12 @@ class Control extends React.Component{
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.props.updateCoord(e,d,control.id) }}
+              onClick={this.props.toggleSelected(control)}
               bounds={"parent"}>
-              <div className="materialize-textarea">
+              <div className="materialize-textarea"
+              style={{backgroundColor:control.color,
+                      width:'100%',
+                      height:'100%'}}>
                 {control.text}
               </div>
             </Rnd>
@@ -39,8 +47,12 @@ class Control extends React.Component{
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.props.updateCoord(e,d,control.id) }}
+              onClick={this.props.toggleSelected(control)}
               bounds={"parent"}>
-              <div className="container">
+              <div className="container"
+              style={{backgroundColor:control.color,
+                width:'100%',
+                height:'100%'}}>
               </div>
             </Rnd>
           );
@@ -51,8 +63,12 @@ class Control extends React.Component{
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.props.updateCoord(e,d,control.id) }}
+              onClick={this.props.toggleSelected(control)}
               bounds={"parent"}>
-              <div className="button">
+              <div className="button"
+              style={{backgroundColor:control.color,
+                width:'100%',
+                height:'100%'}}>
                 {control.text}
               </div>
             </Rnd>
