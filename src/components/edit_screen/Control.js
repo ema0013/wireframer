@@ -13,18 +13,26 @@ class Control extends React.Component{
       this.setState({jankSolution:false});
     }
 
+    updateTogglePlease = (control) =>{
+      this.props.toggleSelected(control);
+      this.setState({jankSolution:false});
+    }
+
     render(){
       const control = this.props.control;
+      console.log(control.is_selected)
         if(control.type === "label"){
           return(
             <Rnd
               size={{width:control.width, height:control.height}}
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
-              onClick={this.props.toggleSelected(control)}
-              bounds={"parent"}>
-              <label
-              style={{backgroundColor:control.color,
+              onClick={this.updateTogglePlease(control)}
+              bounds={"parent"}
+              style={{borderStyle:"solid" }}
+              >
+              <label id={control.is_selected ? "toggled":""}
+              style={{backgroundColor:control.color, 
                 width:'100%',
                 height:'100%'}}>
                 {control.text}
@@ -39,8 +47,9 @@ class Control extends React.Component{
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
               onClick={this.props.toggleSelected(control)}
-              bounds={"parent"}>
-              <div className="materialize-textarea"
+              bounds={"parent"}
+              style={{borderStyle:"solid"}}>
+              <div className="materialize-textarea" id={control.is_selected ? "toggled":""}
               style={{backgroundColor:control.color,
                       width:'100%',
                       height:'100%'}}>
@@ -56,8 +65,9 @@ class Control extends React.Component{
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
               onClick={this.props.toggleSelected(control)}
-              bounds={"parent"}>
-              <div className="container"
+              bounds={"parent"}
+              style={{borderStyle:"solid"}}>
+              <div className="container" id={control.is_selected ? "toggled":""}
               style={{backgroundColor:control.color,
                 width:'100%',
                 height:'100%'}}>
@@ -72,8 +82,9 @@ class Control extends React.Component{
               position={{x:control.x, y:control.y}}
               onDragStop={(e, d) => { this.updatePlease(e,d,control.id) }}
               onClick={this.props.toggleSelected(control)}
-              bounds={"parent"}>
-              <div className="button"
+              bounds={"parent"}
+              style={{borderStyle:"solid"}}>
+              <div className="btn" id={control.is_selected ? "toggled":""}
               style={{backgroundColor:control.color,
                 width:'100%',
                 height:'100%'}}>

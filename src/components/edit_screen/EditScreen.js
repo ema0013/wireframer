@@ -60,7 +60,8 @@ class DiagramScreen extends Component {
     toggleSelected = (control) =>{
         this.setState({selectedControl:control === this.state.selectedControl ? null : control});
         let newControls = this.state.controls;
-        newControls.forEach(controli => controli.is_selected = (controli === control ? true : false));
+        newControls.forEach(controli => controli.is_selected = (controli === control && this.state.selectedControl ? true : false));
+        this.setState({controls:newControls}, ()=>console.log(this.state.selectedControl));
     }
 
     updateCoord = (e,d, controlIndex) =>{
@@ -155,7 +156,6 @@ class DiagramScreen extends Component {
 
     render() {
         const auth = this.props.auth;
-        console.log(this.state.controls);
         if (!auth.uid) {
             return (<Redirect to="/" />);
         }

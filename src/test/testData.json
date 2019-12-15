@@ -12,7 +12,7 @@
 					"type":"text_field",
 					"text":"This is purely for testing purposes",
 					"is_selected":false,
-					"color":"white",
+					"color":"red",
 					"border_width":5,
 					"border_radius":0,
 					"width":200,
