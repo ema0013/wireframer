@@ -60,7 +60,7 @@ class DiagramScreen extends Component {
     toggleSelected = (control) =>{
         this.setState({selectedControl:control === this.state.selectedControl ? null : control});
         let newControls = this.state.controls;
-        newControls.forEach(controli => controli.is_selected = (controli === control && this.state.selectedControl ? true : false));
+        newControls.forEach(controli => controli.is_selected = (controli === control && this.state.selectedControl === controli ? false : true));
         this.setState({controls:newControls}, ()=>console.log(this.state.selectedControl));
     }
 
@@ -71,7 +71,16 @@ class DiagramScreen extends Component {
         new_controls[controlIndex].x = x;
         new_controls[controlIndex].y = y;
         this.setState({controls:new_controls});
-        this.setState({last_updated: new Date().getTime()});
+    }
+
+    resizeControl = (e,direction,ref,delta,position,controlId) =>{
+        let new_controls = this.state.controls;
+        let newWidth = parseInt(ref.style.width.substring(0,ref.style.width.indexOf("px")));
+        let newHeight = parseInt(ref.style.height.substring(0,ref.style.height.indexOf("px")));
+        console.log(newWidth,newHeight);
+        new_controls[controlId].width = newWidth;
+        new_controls[controlId].height = newHeight;
+        this.setState({controls:new_controls});
     }
 
     addNewButton = () =>{
@@ -154,6 +163,24 @@ class DiagramScreen extends Component {
         this.setState({controls:new_controls});
     }
 
+    selectedFontChange = () =>{
+
+    }
+
+    selectedTextChange = (e) =>{
+        const {target} = e;
+        console.log(target.value);
+        let new_controls = this.state.controls;
+        for(let i = 0; i < new_controls.length; i++){
+            if(new_controls[i].is_selected){
+                new_controls[i].text = target.value;
+                this.setState({selectedControl:new_controls[i]});
+                break;
+            }
+        }
+        this.setState({controls:new_controls})
+    }
+
     render() {
         const auth = this.props.auth;
         if (!auth.uid) {
@@ -179,7 +206,16 @@ class DiagramScreen extends Component {
                         <div className="btn col s3" onClick={this.addNewContainer}>Add new Container</div>
                     </div>
                 </div>
-                <ItemBox controls={this.state.controls} width={this.state.width} height={this.state.height} updateCoord={this.updateCoord} toggleSelected={this.toggleSelected}/>
+                <div className="row">
+                    <div className="col s3">
+                        Selected Control:
+                        <input type="text" onChange={this.selectedTextChange} value={this.state.selectedControl ? this.state.selectedControl.text : ""}/>
+                        <input type="text" onChange={this.selectedFontChange} value={this.state.selectedControl ? this.state.selectedControl.font_size : ""}/>
+
+                    </div>
+                    <ItemBox controls={this.state.controls} width={this.state.width} height={this.state.height} updateCoord={this.updateCoord} toggleSelected={this.toggleSelected} resizeControl = {this.resizeControl}/>
+                </div>
+                
                 
             </div>
         );
