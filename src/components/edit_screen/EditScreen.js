@@ -57,11 +57,25 @@ class DiagramScreen extends Component {
         
     }
 
-    toggleSelected = (control) =>{
-        this.setState({selectedControl:control === this.state.selectedControl ? null : control});
+    toggleSelected = (controlid) =>{
         let newControls = this.state.controls;
-        newControls.forEach(controli => controli.is_selected = (controli === control && this.state.selectedControl === controli ? false : true));
-        this.setState({controls:newControls}, ()=>console.log(this.state.selectedControl));
+        newControls.map(control => control.is_selected = false);
+        if(this.state.selectedControl && this.state.selectedControl.id === controlid){
+            this.setState({selectedControl:null});
+            this.setState({controls:newControls}, ()=>console.log(this.state.selectedControl));
+        }else{
+            let newSelected = null;
+            for(let i = 0; i < newControls.length; i++){
+                if(i === controlid){
+                    newControls[i].is_selected = true;
+                    newSelected = newControls[i];
+                    break;
+                }
+            }
+            this.setState({selectedControl:newSelected});
+            this.setState({controls:newControls}, ()=>console.log(this.state.selectedControl));
+        }
+        
     }
 
     updateCoord = (e,d, controlIndex) =>{
@@ -163,8 +177,32 @@ class DiagramScreen extends Component {
         this.setState({controls:new_controls});
     }
 
-    selectedFontChange = () =>{
+    selectedFontChange = (e) =>{
+        const {target} = e;
+        console.log(target.value);
+        let new_controls = this.state.controls;
+        for(let i = 0; i < new_controls.length; i++){
+            if(new_controls[i].is_selected){
+                new_controls[i].font_size = parseInt(target.value);
+                this.setState({selectedControl:new_controls[i]});
+                break;
+            }
+        }
+        this.setState({controls:new_controls});
+    }
 
+    selectedColorChange = (e) =>{
+        const {target} = e;
+        console.log(target.value);
+        let new_controls = this.state.controls;
+        for(let i = 0; i < new_controls.length; i++){
+            if(new_controls[i].is_selected){
+                new_controls[i].color = target.value;
+                this.setState({selectedControl:new_controls[i]});
+                break;
+            }
+        }
+        this.setState({controls:new_controls});
     }
 
     selectedTextChange = (e) =>{
@@ -178,7 +216,7 @@ class DiagramScreen extends Component {
                 break;
             }
         }
-        this.setState({controls:new_controls})
+        this.setState({controls:new_controls});
     }
 
     render() {
@@ -211,6 +249,8 @@ class DiagramScreen extends Component {
                         Selected Control:
                         <input type="text" onChange={this.selectedTextChange} value={this.state.selectedControl ? this.state.selectedControl.text : ""}/>
                         <input type="text" onChange={this.selectedFontChange} value={this.state.selectedControl ? this.state.selectedControl.font_size : ""}/>
+                        <input type="text" onChange={this.selectedColorChange} value={this.state.selectedControl ?
+                        this.state.selectedControl.color : ""}/>
 
                     </div>
                     <ItemBox controls={this.state.controls} width={this.state.width} height={this.state.height} updateCoord={this.updateCoord} toggleSelected={this.toggleSelected} resizeControl = {this.resizeControl}/>
